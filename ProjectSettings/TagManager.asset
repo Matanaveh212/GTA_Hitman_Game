@@ -22,6 +22,7 @@ TagManager:
   - PlayerPoint
   - PlayerCanvas
   - MinimapCamera
+  - Projectile
   layers:
   - Default
   - TransparentFX

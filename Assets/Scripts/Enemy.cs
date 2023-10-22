@@ -1,61 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Splines;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private Transform pointA;
-    [SerializeField] private Transform pointB;
-    [SerializeField] private Transform pointC;
-    [SerializeField] private Transform pointD;
+    [SerializeField] private Transform player;
+    [SerializeField] private float sightDistance;
+    [SerializeField] private float sightAngle;
 
-    [SerializeField] private float Speed;
+    bool isHit;
 
-    private float interpolateAmount;
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.tag == "Projectile" || collision.transform.tag == "Car" && !isHit)
+        {
+            isHit = true;
 
-    private bool atPointB = false;
-    private bool atPointC = false;
-    private bool atPointD = false;
+            GetComponent<Animator>().enabled = false;
+            GetComponent<SplineAnimate>().enabled = false;
+            GetComponent<CapsuleCollider>().enabled = false;
+
+            transform.Find("Canvas").gameObject.SetActive(false);
+            transform.Find("Root").gameObject.SetActive(true);
+
+            FindObjectOfType<TargetsEliminated>().AddTargetScore();
+        }
+    }
 
     private void Update()
     {
-        interpolateAmount += Time.deltaTime % 1f * Speed;
+        Vector3 directionToPlayer = player.position - transform.position;
+        float distanceToPlayer = directionToPlayer.magnitude;
+        float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
 
-        if (!atPointB)
+        if (distanceToPlayer <= sightDistance && angleToPlayer <= sightAngle && !isHit)
         {
-            transform.LookAt(pointB.position);
-            transform.position = Vector3.Slerp(pointA.position, pointB.position, interpolateAmount);
-            if (transform.position == pointB.position)
-            {
-                atPointB = true;
-            }
+            Debug.Log("Spotted!");
         }
-        else if (!atPointC)
-        {
-            transform.LookAt(pointC.position);
-            transform.position = Vector3.Slerp(pointB.position, pointC.position, interpolateAmount);
-            if (transform.position == pointC.position)
-            {
-                atPointC = true;
-            }
-        }
-        else if (!atPointD)
-        {
-            transform.LookAt(pointD.position);
-            transform.position = Vector3.Slerp(pointC.position, pointD.position, interpolateAmount);
-            if (transform.position == pointD.position)
-            {
-                atPointD = true;
-            }
-        }
-        else if (atPointD)
-        {
-            transform.LookAt(pointA.position);
-            transform.position = Vector3.Slerp(pointD.position, pointA.position, interpolateAmount);
-            if (transform.position == pointA.position)
-            {
-                atPointD = false;
-            }
-        }
+
+        /* Draw the distance to the player using a gizmo.
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(transform.position, transform.position + directionToPlayer * distanceToPlayer);
+
+        // Draw the angle to the player using a gizmo.
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position, Quaternion.Euler(0, angleToPlayer, 0) * transform.forward);
+        */
     }
 }
