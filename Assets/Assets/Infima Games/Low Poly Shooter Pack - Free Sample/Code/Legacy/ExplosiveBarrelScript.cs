@@ -83,7 +83,12 @@ public class ExplosiveBarrelScript : MonoBehaviour {
 				hit.gameObject.GetComponent<GasTankScript> ().isHit = true;
 				hit.gameObject.GetComponent<GasTankScript> ().explosionTimer = 0.05f;
 			}
-		}
+
+			if(hit.transform.tag == "Enemy")
+			{
+				hit.GetComponent<Enemy>().EnemyDeath();
+            }
+        }
 
 		//Raycast downwards to check the ground tag
 		RaycastHit checkGround;

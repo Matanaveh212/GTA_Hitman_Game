@@ -15,17 +15,22 @@ public class Enemy : MonoBehaviour
     {
         if (collision.transform.tag == "Projectile" || collision.transform.tag == "Car" && !isHit)
         {
-            isHit = true;
-
-            GetComponent<Animator>().enabled = false;
-            GetComponent<SplineAnimate>().enabled = false;
-            GetComponent<CapsuleCollider>().enabled = false;
-
-            transform.Find("Canvas").gameObject.SetActive(false);
-            transform.Find("Root").gameObject.SetActive(true);
-
-            FindObjectOfType<TargetsEliminated>().AddTargetScore();
+            EnemyDeath();
         }
+    }
+
+    public void EnemyDeath()
+    {
+        isHit = true;
+
+        GetComponent<Animator>().enabled = false;
+        if (GetComponent<SplineAnimate>()) GetComponent<SplineAnimate>().enabled = false;
+        GetComponent<Collider>().enabled = false;
+
+        transform.Find("Canvas").gameObject.SetActive(false);
+        transform.Find("Root").gameObject.SetActive(true);
+
+        FindObjectOfType<TargetsEliminated>().AddTargetScore();
     }
 
     private void Update()
@@ -36,16 +41,21 @@ public class Enemy : MonoBehaviour
 
         if (distanceToPlayer <= sightDistance && angleToPlayer <= sightAngle && !isHit)
         {
-            Debug.Log("Spotted!");
+            FindAnyObjectByType<TargetsEliminated>().StartCoroutine("PlayerLose", "They Spotted You!");
         }
+    }
 
-        /* Draw the distance to the player using a gizmo.
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(transform.position, transform.position + directionToPlayer * distanceToPlayer);
+    private void OnDrawGizmos()
+    {
+        float distance = Vector3.Distance(transform.position, Camera.current.transform.position);
+        Vector3 forward = transform.forward;
 
-        // Draw the angle to the player using a gizmo.
+        Vector3 point2 = transform.position + Quaternion.Euler(0, sightAngle / 2f, 0) * forward * sightDistance;
+        Vector3 point3 = transform.position + Quaternion.Euler(0, -sightAngle / 2f, 0) * forward * sightDistance;
+
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, Quaternion.Euler(0, angleToPlayer, 0) * transform.forward);
-        */
+        Gizmos.DrawLine(transform.position, point2);
+        Gizmos.DrawLine(transform.position, point3);
+        Gizmos.DrawLine(point2, point3);
     }
 }

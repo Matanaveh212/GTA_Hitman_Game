@@ -23,6 +23,8 @@ TagManager:
   - PlayerCanvas
   - MinimapCamera
   - Projectile
+  - Stone
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -31,7 +33,7 @@ TagManager:
   - Water
   - UI
   - 
-  - 
+  - LevelLoader
   - Wall
   - First Person View
   - Character

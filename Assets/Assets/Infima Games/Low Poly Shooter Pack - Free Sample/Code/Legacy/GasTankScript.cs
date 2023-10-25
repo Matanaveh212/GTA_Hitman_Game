@@ -142,7 +142,12 @@ public class GasTankScript : MonoBehaviour {
 				//Toggle explode bool on explosive barrel object
 				hit.transform.gameObject.GetComponent<ExplosiveBarrelScript>().explode = true;
 			}
-		}
+
+            if (hit.transform.tag == "Enemy")
+            {
+                hit.GetComponent<Enemy>().EnemyDeath();
+            }
+        }
 		
 		//Spawn the explosion prefab
 		Instantiate (explosionPrefab, transform.position, 

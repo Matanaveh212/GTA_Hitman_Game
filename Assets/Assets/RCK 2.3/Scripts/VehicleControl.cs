@@ -440,8 +440,7 @@ public class VehicleControl : MonoBehaviour
 
     void Update()
     {
-
-
+        
         if (!carSetting.automaticGear && activeControl)
         {
             if (Input.GetKeyDown("page up"))
@@ -627,7 +626,7 @@ public class VehicleControl : MonoBehaviour
         }
 
 
-
+        
 
 
 

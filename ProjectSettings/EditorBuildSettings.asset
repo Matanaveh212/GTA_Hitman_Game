@@ -6,8 +6,23 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/WeaponsDemo.unity
-    guid: 63fdc04a097eb0b4ba4af78a98dac40d
+    path: Assets/Scenes/MainMenu.unity
+    guid: e6bd49fd0e2f2aa44b0dd9a2929b7f80
+  - enabled: 1
+    path: Assets/Scenes/Challenges.unity
+    guid: ecf4505a46ed7414db85ae98b0ed25df
+  - enabled: 1
+    path: Assets/Scenes/Level1.unity
+    guid: 66b9944ef85a0934eba32331a52be3f6
+  - enabled: 1
+    path: Assets/Scenes/Level2.unity
+    guid: 62004abf050f01644b35f036b3ea0152
+  - enabled: 1
+    path: Assets/Scenes/Level3.unity
+    guid: 5cd71139044e7c34e959299e220a8cb4
+  - enabled: 1
+    path: Assets/Scenes/Level4.unity
+    guid: 67546c1b8c2988148860d1e9801ee39f
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9eb07e2d669e9c94e9d7d3c782a916f7,
       type: 2}
