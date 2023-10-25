@@ -5,6 +5,7 @@ using UnityEngine;
 public class Ring : MonoBehaviour
 {
     [SerializeField] Material collectedMaterial;
+    [SerializeField] AudioClip ringCollected;
     bool isCollected;
 
     private void OnTriggerEnter(Collider other)
@@ -13,6 +14,7 @@ public class Ring : MonoBehaviour
         {
             GetComponent<Renderer>().material = collectedMaterial;
             FindAnyObjectByType<TargetsEliminated>().AddTargetScore();
+            FindAnyObjectByType<SoundPlayer>().PlaySound(ringCollected);
             isCollected = true;
         }
     }

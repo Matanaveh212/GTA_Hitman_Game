@@ -4099,6 +4099,7 @@ MonoBehaviour:
   player: {fileID: 0}
   sightDistance: 10
   sightAngle: 70
+  death: {fileID: 8300000, guid: 946497c482d639143ac58a2e3b4afcf7, type: 3}
 --- !u!1 &8682396682644053809
 GameObject:
   m_ObjectHideFlags: 0

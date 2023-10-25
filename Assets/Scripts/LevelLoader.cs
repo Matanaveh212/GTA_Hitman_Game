@@ -5,6 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour
 {
+    private void Awake()
+    {
+        if (SceneManager.GetActiveScene().buildIndex == 0 || SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
+
     public Animator transition;
     public void LoadThisScene(int loadThisScene)
     {
@@ -25,5 +39,10 @@ public class LevelLoader : MonoBehaviour
         SceneManager.LoadScene(levelIndex);
 
 
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

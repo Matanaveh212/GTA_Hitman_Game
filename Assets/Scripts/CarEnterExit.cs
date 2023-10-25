@@ -5,6 +5,7 @@ public class CarEnterExit : MonoBehaviour
     public bool isInCar;
     public float enterDistance = 1f;
     public GameObject carCanvas;
+    public GameObject ECanvas;
     Collider playerCollider;
     GameObject playerCanvas;
     Minimap minimapCamera;
@@ -25,6 +26,23 @@ public class CarEnterExit : MonoBehaviour
     private void Update()
     {
         float distance = Vector3.Distance(transform.position, playerCollider.transform.position);
+        
+        if (distance <= enterDistance) 
+        {
+            if (ECanvas)
+            {
+                ECanvas.SetActive(true);
+                ECanvas.transform.LookAt(playerCollider.gameObject.transform);
+            }
+        }
+
+        if (distance > enterDistance)
+        {
+            if (ECanvas)
+            {
+                ECanvas.SetActive(false);
+            }
+        }
 
         if (distance <= enterDistance && !isInCar && Input.GetKeyDown(KeyCode.E))
         {
@@ -34,6 +52,10 @@ public class CarEnterExit : MonoBehaviour
             playerCanvas.SetActive(false);
             vehicleControl.activeControl = true;
             playerCollider.gameObject.SetActive(false);
+            if (ECanvas)
+            {
+                ECanvas.SetActive(false);
+            }
         }
 
         else if (isInCar && Input.GetKeyDown(KeyCode.E) && vehicleControl.speed < 5)

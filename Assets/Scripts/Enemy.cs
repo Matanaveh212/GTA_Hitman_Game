@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Transform player;
     [SerializeField] private float sightDistance;
     [SerializeField] private float sightAngle;
+    [SerializeField] AudioClip death;
 
     bool isHit;
 
@@ -31,6 +32,7 @@ public class Enemy : MonoBehaviour
         transform.Find("Root").gameObject.SetActive(true);
 
         FindObjectOfType<TargetsEliminated>().AddTargetScore();
+        FindAnyObjectByType<SoundPlayer>().PlaySound(death);
     }
 
     private void Update()
